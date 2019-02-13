@@ -30,7 +30,7 @@ class App extends Component {
       .get('https://lambda-treasure-hunt.herokuapp.com/api/adv/init/', header)
       .then(response => {
         console.log(response.data);
-        console.log(response.data.cooldown);
+        console.log('init cooldown:',response.data.cooldown);
         this.setState({
           room: response.data
         });
@@ -49,7 +49,12 @@ class App extends Component {
     }
     axios
       .post('https://lambda-treasure-hunt.herokuapp.com/api/adv/move/', data, header)
-      .then(res => console.log(res.data))
+      .then(res =>{
+        console.log('movement cooldown:',res.data.cooldown)
+        this.setState({
+          room: res.data
+        });
+      } )
       .catch(err => console.error(err.res.data));
   };
   render() {
